@@ -1,4 +1,4 @@
-// SEASONS SPRINT - FIXED WITH GAME OVER
+
 const config = {
     type: Phaser.AUTO,
     width: 800,
@@ -21,7 +21,7 @@ const config = {
 
 new Phaser.Game(config);
 
-// Game variables
+// variables
 let player;
 let ground;
 let platforms;
@@ -36,7 +36,7 @@ let seasonTimer = 0;
 let gameOver = false;
 let gameOverText;
 
-// Seasons
+// seasons
 const SEASONS = [
     { name: 'SPRING', bg: '#87CEEB', ground: '#90EE90' },
     { name: 'SUMMER', bg: '#FFD93D', ground: '#F4A460' },
@@ -45,32 +45,28 @@ const SEASONS = [
 ];
 
 function preload() {
-    // Create KAWAII CHIBI sprite
+    // sprite
     createKawaiiSprite(this);
 }
 
 function createKawaiiSprite(scene) {
     const graphics = scene.make.graphics({ x: 0, y: 0, add: false });
     
-    // === CHIBI BODY (small and cute) ===
-    graphics.fillStyle(0xFFB6D9); // Pastel pink
+    graphics.fillStyle(0xFFB6D9); 
     graphics.fillRoundedRect(18, 42, 24, 20, 8);
     
-    // === GIANT CHIBI HEAD ===
-    graphics.fillStyle(0xFFE5CC); // Peachy skin
-    graphics.fillCircle(30, 25, 18); // BIG head!
+    graphics.fillStyle(0xFFE5CC); 
+    graphics.fillCircle(30, 25, 18); 
     
-    // === HAIR ===
-    graphics.fillStyle(0xFFA07A); // Light coral/pink hair
-    // Hair top
+    graphics.fillStyle(0xFFA07A); 
+   
     graphics.fillCircle(30, 12, 16);
-    // Side hair puffs
+    
     graphics.fillCircle(15, 20, 10);
     graphics.fillCircle(45, 20, 10);
-    
-    // === SUPER CUTE PONYTAILS ===
+   
     graphics.fillStyle(0xFFA07A);
-    // Left ponytail
+    
     graphics.beginPath();
     graphics.moveTo(12, 22);
     graphics.lineTo(5, 30);
@@ -79,7 +75,6 @@ function createKawaiiSprite(scene) {
     graphics.closePath();
     graphics.fillPath();
     
-    // Right ponytail  
     graphics.beginPath();
     graphics.moveTo(48, 22);
     graphics.lineTo(55, 30);
@@ -88,34 +83,28 @@ function createKawaiiSprite(scene) {
     graphics.closePath();
     graphics.fillPath();
     
-    // === ADORABLE BOWS ===
-    graphics.fillStyle(0xFF69B4); // Hot pink
-    // Left bow
+    graphics.fillStyle(0xFF69B4); 
     graphics.fillCircle(10, 18, 5);
     graphics.fillCircle(16, 18, 5);
     graphics.fillCircle(13, 18, 3);
-    // Right bow
+    
     graphics.fillCircle(44, 18, 5);
     graphics.fillCircle(50, 18, 5);
     graphics.fillCircle(47, 18, 3);
     
-    // === GIANT KAWAII EYES ===
-    // Eye whites (HUGE!)
+    
     graphics.fillStyle(0xFFFFFF);
     graphics.fillEllipse(23, 26, 8, 10);
     graphics.fillEllipse(37, 26, 8, 10);
     
-    // Iris (beautiful blue/purple)
-    graphics.fillStyle(0x9370DB); // Medium purple
+    graphics.fillStyle(0x9370DB); 
     graphics.fillCircle(23, 27, 6);
     graphics.fillCircle(37, 27, 6);
-    
-    // Pupils
-    graphics.fillStyle(0x4B0082); // Dark purple
+  
+    graphics.fillStyle(0x4B0082); 
     graphics.fillCircle(23, 28, 4);
     graphics.fillCircle(37, 28, 4);
     
-    // SPARKLES in eyes (super kawaii!)
     graphics.fillStyle(0xFFFFFF);
     graphics.fillCircle(21, 25, 3);
     graphics.fillCircle(35, 25, 3);
@@ -124,43 +113,36 @@ function createKawaiiSprite(scene) {
     graphics.fillCircle(25, 26, 1);
     graphics.fillCircle(39, 26, 1);
     
-    // === BLUSH (rosy cheeks) ===
     graphics.fillStyle(0xFFB6C1);
     graphics.fillCircle(15, 30, 5);
     graphics.fillCircle(45, 30, 5);
     
-    // === TINY CUTE MOUTH ===
     graphics.lineStyle(2, 0xFF69B4);
     graphics.beginPath();
     graphics.arc(30, 32, 5, 0.4, Math.PI - 0.4);
     graphics.strokePath();
     
-    // Tiny smile highlight
     graphics.fillStyle(0xFFB6C1);
     graphics.fillCircle(27, 32, 1);
     graphics.fillCircle(33, 32, 1);
     
-    // === CUTE LITTLE ARMS ===
     graphics.fillStyle(0xFFE5CC);
     graphics.fillCircle(14, 48, 5);
     graphics.fillCircle(46, 48, 5);
     
-    // === TINY LEGS ===
     graphics.fillStyle(0xFFE5CC);
     graphics.fillRoundedRect(22, 60, 6, 12, 3);
     graphics.fillRoundedRect(32, 60, 6, 12, 3);
     
-    // === ADORABLE SHOES ===
-    graphics.fillStyle(0xFF1493); // Deep pink
+    graphics.fillStyle(0xFF1493); 
     graphics.fillEllipse(25, 72, 8, 5);
     graphics.fillEllipse(35, 72, 8, 5);
     
-    // Shoe details (straps)
     graphics.lineStyle(2, 0xFF69B4);
     graphics.lineBetween(22, 70, 28, 70);
     graphics.lineBetween(32, 70, 38, 70);
     
-    // === DRESS DETAILS ===
+    
     graphics.fillStyle(0xFFFFFF);
     graphics.fillCircle(30, 47, 2);
     graphics.fillCircle(30, 52, 2);
@@ -168,24 +150,24 @@ function createKawaiiSprite(scene) {
     
     graphics.generateTexture('kawaii_player', 60, 76);
     graphics.destroy();
-    console.log('Kawaii chibi sprite created!');
+    console.log('Kawaii sprite created!');
 }
 
 function create() {
-    // Reset game variables
+   
     score = 0;
     currentSeason = 0;
     seasonTimer = 0;
     gameOver = false;
     
-    // Set background
+
     this.cameras.main.setBackgroundColor(SEASONS[0].bg);
     
-    // Create DEATH ZONE (bottom ground that kills player)
+    // DEATH ZONE 
     ground = this.add.rectangle(400, 570, 800, 60, parseInt(SEASONS[0].ground.replace('#', '0x')));
     this.physics.add.existing(ground, true);
     
-    // Create platforms (safe to land on)
+    // platforms 
     platforms = this.physics.add.staticGroup();
     
     createPlatform(this, 150, 450, 140);
@@ -195,48 +177,43 @@ function create() {
     createPlatform(this, 550, 310, 100);
     createPlatform(this, 400, 200, 120);
     
-    // Create KAWAII CHIBI player
+
     player = this.physics.add.sprite(100, 400, 'kawaii_player');
     player.setScale(0.9);
     player.setCollideWorldBounds(true);
     player.body.setBounce(0);
     
-    // Store reference (no separate face needed!)
     player.eyeLeft = null;
     player.eyeRight = null;
     player.smile = null;
     
-    // Collisions - platforms are SAFE
     this.physics.add.collider(player, platforms);
     
-    // Ground collision = GAME OVER
     this.physics.add.overlap(player, ground, hitGround, null, this);
     
-    // Create stars
+    // stars
     stars = this.physics.add.group();
     createStars(this);
     this.physics.add.collider(stars, platforms);
     this.physics.add.overlap(player, stars, collectStar, null, this);
     
-    // Controls
+    // controls
     cursors = this.input.keyboard.createCursorKeys();
     spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
-    // Score text - NO BLACK BORDER
+
     scoreText = this.add.text(20, 20, 'Score: 0', {
         fontSize: '32px',
         fill: '#fff',
         fontFamily: 'Ribeye'
     });
-    
-    // Season text - NO BLACK BORDER
+
     seasonText = this.add.text(400, 20, SEASONS[0].name, {
         fontSize: '38px',
         fill: '#fff',
         fontFamily: 'Ribeye'
     }).setOrigin(0.5, 0);
     
-    // Game over text - NO BLACK BORDER
     gameOverText = this.add.text(400, 300, '', {
         fontSize: '48px',
         fill: '#ff0000',
@@ -281,16 +258,15 @@ function createStars(scene) {
 }
 
 function hitGround(playerObj, groundObj) {
-    // GAME OVER!
     gameOver = true;
     
-    // Stop physics
+   
     this.physics.pause();
     
-    // Turn player gray (sad)
+   
     player.setTint(0x888888);
     
-    // Show game over message
+  
     gameOverText.setText('GAME OVER!\nScore: ' + score + '\n\nPress SPACE to Restart');
     gameOverText.setVisible(true);
     
@@ -323,18 +299,16 @@ function collectStar(playerObj, star) {
 }
 
 function update(time, delta) {
-    // No need to update face - it's part of the sprite!
     
-    // If game over, wait for SPACE to restart
     if (gameOver) {
         if (Phaser.Input.Keyboard.JustDown(spaceKey)) {
-            // Reset everything
+            
             gameOver = false;
             score = 0;
             currentSeason = 0;
             seasonTimer = 0;
             
-            // Restart the scene
+            
             this.scene.restart();
             console.log('Game restarted! Score reset to 0');
         }
@@ -392,3 +366,4 @@ function changeSeason(scene) {
 }
 
 console.log('Seasons Sprint Ready! Dont touch the ground!');
+
